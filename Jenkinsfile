@@ -15,7 +15,8 @@ podTemplate(containers: [
                 // Credentials
                 withCredentials([file(credentialsId: 'gcp_key', variable: 'sa')]) {
                     sh 'cat "$sa" > TF_VAR_json_credential'
-                    env['TF_VAR_json_credential'] = "TF_VAR_json_credential"
+                    env.TF_VAR_json_credential = 'TF_VAR_json_credential'
+                    env.GOOGLE_BACKEND_CREDENTIALS = 'TF_VAR_json_credential'
                 }
 
                 sh 'terraform init'
