@@ -1,0 +1,4 @@
+.terraform/
+.terraform.lock.hcl
+.terraform.lock.hcl.info
+TF_VAR_json_credential
