@@ -11,14 +11,11 @@ podTemplate(containers: [
             stage('Git Clone') {
                 git 'https://github.com/susguzman/argo-terraform.git'
             }
-            stage('Configuration') {
+            stage('Init') {
                 // Credentials
                 withCredentials([file(credentialsId: 'gcp_key', variable: 'sa')]) {
-                    sh "cat $sa > TF_VAR_json_credential"
-                }
-
-                withCredentials([string(credentialsId: 'art_repo', variable: 'repo'), usernameColonPassword(credentialsId: 'art_creds', variable: 'creds')]) {
-                    sh 'curl -u "$creds" -T build/hello-world-0.1.0.tgz "$repo"'
+                    sh 'cat "$sa" > TF_VAR_json_credential'
+                    env['TF_VAR_json_credential'] = "TF_VAR_json_credential"
                 }
 
                 sh 'terraform init'
